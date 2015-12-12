@@ -3,6 +3,15 @@ var request     = require('request');
 
 module.exports = function(app) {
 
-  app.get('/hashtag')
+app.get('/', function(req, res) {
+  res.render('index.ejs');
+});
 
-}
+app.get('/bernie', function(req, res) {
+  res.render('bernie.ejs');
+})
+
+app.get('/hillary', function(req, res){
+  res.render('hillary.ejs')
+})
+};

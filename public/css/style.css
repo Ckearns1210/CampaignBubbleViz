@@ -93,7 +93,7 @@
 }
 
 circle {
-  fill: #1B8BCD;
+  fill: #009587;
   stroke: #2C2C2C;
   stroke-width: 2px;
   opacity: .7;
@@ -108,24 +108,15 @@ body {
 }
 
 
-div[class^='agency']:hover {
+.occupation:hover {
   cursor:pointer;
 }
 
-#description {
-  position: absolute;
-  bottom: 10px;
-  color: white;
-  font-family: sans-serif;
-  width: 400px;
-}
-#description a, #description a:visited {
-  color:steelblue;
-}
+
 
 .d3-tip.animate {
-  animation: bounceIn 0.2s ease-out;
-  -webkit-animation: bounceIn 0.2s ease-out;
+  animation: bounceIn 5s ease-out;
+  -webkit-animation: bounceIn 5s ease-out;
 }
 .d3-tip span {
   color: #FAFAFA;

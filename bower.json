@@ -1,0 +1,22 @@
+{
+  "name": "bubblecharge-master",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Colin Kearns <ckearns1210@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Ckearns1210/CampaignBubbleViz",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3-tip": "~0.6.7",
+    "underscore": "~1.8.3"
+  }
+}

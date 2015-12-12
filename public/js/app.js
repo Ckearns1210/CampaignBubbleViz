@@ -22,7 +22,8 @@ d3.csv("/trump_contributor_all.csv")
       }
     })
     //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
-    d3DataReady(_occKeys)
+    var sorted = _.sortBy(_occKeys, function(o) { return o.count}).slice(Math.max(_occKeys.length - 500, 1));
+    d3DataReady(sorted)
   })
 
 //Utility function
@@ -30,6 +31,16 @@ d3.csv("/trump_contributor_all.csv")
   {
       return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
+
+  var toggleColor = (function() {
+    var currentColor = "#2C2C2C";
+
+    return function() {
+      $('circle').css('stroke', '#2C2C2C')
+      currentColor = currentColor == "#2C2C2C" ? "red" : "#2C2C2C";
+      d3.select(this).style("stroke", currentColor);
+    }
+  })();
 
 //https://github.com/chriswhong/bubblecharge/blob/master/index.html, https://github.com/vlandham/bubble_cloud were of great help
 //inspiration: http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?_r=0
@@ -62,7 +73,7 @@ var margin = {
 
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .html(function(d) { return "<span>" + "Occupation: " + toTitleCase(d.occ) + "," + " Number of Contributors: " + d.contributors + "</span>" })
+      .html(function(d) { return "<span>" + toTitleCase(d.occ) + ", "  + d.contributors + " contributors" + "</span>" })
       .direction('nw')
       .offset([0, 3])
 
@@ -70,7 +81,7 @@ var margin = {
             return parseInt(d.count);
         }),
         radius_scale = d3.scale.pow()
-          .exponent(0.5)
+          .exponent(0.55)
           .domain([0,max_amount])
           .range([3, 100]),
         nodes = [];
@@ -118,12 +129,13 @@ var margin = {
         return d.radius;
       })
       .attr("class",function(d){
-        return "occupation" + d.occ;
+        return "occupation " + d.occ;
       }).style("fill", function(d) {
         return d.color;
       }).call(force.drag)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
+      .on('click', toggleColor)
 
     //pull to center on tick
     function tick(e) {
