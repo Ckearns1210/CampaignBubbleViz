@@ -5,7 +5,7 @@ var express     = require('express'),
     request     = require('request'),
     mongoose    = require('mongoose'),
     bodyParser  = require('body-parser'),
-    port        = process.env.PORT || 4000;
+    port        = process.env.PORT || 3000;
     configDB    = require('./config/database.js');
 
 //mongoose DB
