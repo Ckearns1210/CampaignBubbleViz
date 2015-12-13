@@ -1,131 +1,157 @@
 $(document).ready(function() {
-  dataTrump()
-  dataBernie()
-  dataHillary()
+  dataTrump();
+  dataHillary();
+  dataBernie();
+  var chartMaker = function () {
+    if (_.isEmpty(sortedTrump) || _.isEmpty(sortedHillary) || _.isEmpty(sortedBernie)) {
+      console.log('running recursion')
+      setTimeout(chartMaker, 100)
+    }
+    else {
+      console.log('got here')
+        findUniques();
+    }
+  };
+  chartMaker()
+  //end on load
 });
-  //global variable to store occupation object when CSV is parsed
+//global variables to store occupation object when CSV is parsed, the sortedArrays after they have been given new key values and sorted, and the final array with proper booleans for is Unique
 
 var occupationCountsTrump = {}
 var sortedTrump = [];
+var sortedBooleanedTrump = [];
 
 var occupationCountsHillary = {}
 var sortedHillary = [];
+var sortedBooleanedHillary = [];
 
 var occupationCountsBernie = {}
 var sortedBernie = [];
+var sortedBooleanedBernie = [];
 
 var findUniques = function() {
-    var all = sortedBernie.concat(sortedHillary).concat(sortedTrump);
-    var allUnique = _.uniq(all, function(obj) {
-      return obj.occ
-    });
-      for (var i in allUnique) {
-        allUnique[i].unique = false
+  //Concatonate all three arrays
+  var all = sortedBernie.concat(sortedHillary).concat(sortedTrump);
+  //reduce the array
+  var count = all.reduce(function(ret, el) {
+      ret[el.occ] = (ret[el.occ] || 0) + 1;
+      return ret;
+  }, {});
+
+//find uniques and change boolean
+  all.forEach(function(el) { el.unique = count[el.occ] === 1; });
+  //push into 3 new arrays
+  console.log(JSON.stringify(all))
+  all.forEach(function(item) {
+     if (item.name === "trump") {
+    sortedBooleanedTrump.push(item)
+  }
+  else if (item.name === "hillary") {
+    sortedBooleanedHillary.push(item)
+  } else {
+    sortedBooleanedBernie.push(item)
     }
-  }
-
-  var makeTrumpData = function(all, allUnique) {
-    var trumpAll = _.where(all, {name: "trump"} && {unique: true})
-  }
+  })
+  d3DataReady(sortedBooleanedTrump)
+}
 
 
+var dataTrump = function() {
+  console.log('made it here')
+  //load in csv, parse it for occuptions and count number of unique
+  d3.csv("/trump_contributor_all.csv")
+    .row(function(d) {
+      //extraction of occupation name
+      //build the data counts
+      var current = d.contbr_occupation
 
+      if (current) {
+        occupationCountsTrump[current] = (current in occupationCountsTrump) ? occupationCountsTrump[current] + 1 : 1;
+      }
 
-
-  var dataTrump = function() {
-    //load in csv, parse it for occuptions and count number of unique
-    d3.csv("/trump_contributor_all.csv")
-      .row(function(d) {
-        //extraction of occupation name
-        //build the data counts
-        var current = d.contbr_occupation
-
-        if (current) {
-          occupationCountsTrump[current] = (current in occupationCountsTrump) ? occupationCountsTrump[current] + 1 : 1;
-        }
-
-      })
-      .get(function(err, result) {
-        // transform the data
-        if (err) throw err
-          //make into array of objects with key/value pairs in JSON format
-        var _occKeysTrump = Object.keys(occupationCountsTrump).map(key => {
-            return {
-              occ: key,
-              count: occupationCountsTrump[key],
-              unique: true,
-              name: "trump"
-            }
-          })
-          //put in order and take top 500
-        sortedTrump = _.sortBy(_occKeysTrump, function(o) {
-          return o.count
-        }).slice(Math.max(_occKeysTrump.length - 500, 1));
-        //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
-        d3DataReady(sortedTrump);
-      })
-  }
-
-  var dataBernie = function() {
-    d3.csv("/bernie_contributors_all.csv")
-      .row(function(d) {
-        //extraction of occupation name
-        //build the data counts
-        var current = d.contbr_occupation
-        if (current) {
-          occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + 1 : 1
-        }
-      })
-      .get(function(err, result) {
-        // transform the data
-        if (err) throw err
-          //make into array of objects with key/value pairs in JSON format
-        var _occKeysBernie = Object.keys(occupationCountsBernie).map(key => {
+    })
+    .get(function(err, result) {
+      // transform the data
+      if (err) throw err
+        //make into array of objects with key/value pairs in JSON format
+      var _occKeysTrump = Object.keys(occupationCountsTrump).map(key => {
           return {
             occ: key,
-            count: occupationCountsBernie[key],
+            count: occupationCountsTrump[key],
             unique: true,
-            name: "bernie"
+            name: "trump"
           }
         })
+        //put in order and take top 500
+      sortedTrump = _.sortBy(_occKeysTrump, function(o) {
+        return o.count
+      }).slice(Math.max(_occKeysTrump.length - 500, 1));
+      //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
 
-        //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
-         sortedBernie = _.sortBy(_occKeysBernie, function(o) {
-          return o.count
-        }).slice(Math.max(_occKeysBernie.length - 500, 1));
+    })
+}
 
-      })
-  }
-
-  var dataHillary = function() {
-    d3.csv("/clinton_contributors_all.csv")
-      .row(function(d) {
-        //extraction of occupation name
-        //build the data counts
-        var current = d.contbr_occupation
-        if (current) {
-          occupationCountsHillary[current] = (current in occupationCountsHillary) ? occupationCountsHillary[current] + 1 : 1
+var dataBernie = function() {
+  d3.csv("/bernie_contributors_all.csv")
+    .row(function(d) {
+      //extraction of occupation name
+      //build the data counts
+      var current = d.contbr_occupation
+      if (current) {
+        occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + 1 : 1
+      }
+    })
+    .get(function(err, result) {
+      // transform the data
+      if (err) throw err
+        //make into array of objects with key/value pairs in JSON format
+      var _occKeysBernie = Object.keys(occupationCountsBernie).map(key => {
+        return {
+          occ: key,
+          count: occupationCountsBernie[key],
+          unique: true,
+          name: "bernie"
         }
       })
-      .get(function(err, result) {
-        // transform the data
-        if (err) throw err
-          //make into array of objects with key/value pairs in JSON format
-        var _occKeysHillary = Object.keys(occupationCountsHillary).map(key => {
-          return {
-            occ: key,
-            count: occupationCountsHillary[key],
-            unique: true,
-            name: "hillary"
-          }
-        })
 
-        //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
-        sortedHillary = _.sortBy(_occKeysHillary, function(o) {
-          return o.count
-        }).slice(Math.max(_occKeysHillary.length - 500, 1));
+      //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
+      sortedBernie = _.sortBy(_occKeysBernie, function(o) {
+        return o.count
+      }).slice(Math.max(_occKeysBernie.length - 500, 1));
+
+    })
+}
+
+var dataHillary = function() {
+  d3.csv("/clinton_contributors_all.csv")
+    .row(function(d) {
+      //extraction of occupation name
+      //build the data counts
+      var current = d.contbr_occupation
+      if (current) {
+        occupationCountsHillary[current] = (current in occupationCountsHillary) ? occupationCountsHillary[current] + 1 : 1
+      }
+    })
+    .get(function(err, result) {
+      // transform the data
+      if (err) throw err
+        //make into array of objects with key/value pairs in JSON format
+      var _occKeysHillary = Object.keys(occupationCountsHillary).map(key => {
+        return {
+          occ: key,
+          count: occupationCountsHillary[key],
+          unique: true,
+          name: "hillary"
+        }
       })
+
+      //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
+      sortedHillary = _.sortBy(_occKeysHillary, function(o) {
+        return o.count
+      }).slice(Math.max(_occKeysHillary.length - 500, 1));
+    })
   }
+
 
 
 
@@ -220,14 +246,16 @@ var d3DataReady = function(data) {
       var node;
       node = {
         id: i,
+        unique: d.unique,
         occ: d.occ,
         radius: radius_scale(d.count),
         charge: radius_scale(d.count),
-        name: d.occ,
+        name: d.name,
         contributors: d.count,
         cx: Math.random() * 10,
         cy: Math.random() * 10
       }
+      console.log(node)
       nodes.push(node);
     });
 
