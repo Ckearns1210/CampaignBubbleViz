@@ -2,18 +2,18 @@ $(document).ready(function() {
   dataTrump();
   dataHillary();
   dataBernie();
-  var chartMaker = function () {
+
+  var chartMaker = function() {
     if (_.isEmpty(sortedTrump) || _.isEmpty(sortedHillary) || _.isEmpty(sortedBernie)) {
-      console.log('running recursion')
+
       setTimeout(chartMaker, 100)
-    }
-    else {
-      console.log('got here')
-        findUniques();
+    } else {
+
+      findUniques();
     }
   };
   chartMaker()
-  //end on load
+    //end on load
 });
 //global variables to store occupation object when CSV is parsed, the sortedArrays after they have been given new key values and sorted, and the final array with proper booleans for is Unique
 
@@ -34,22 +34,23 @@ var findUniques = function() {
   var all = sortedBernie.concat(sortedHillary).concat(sortedTrump);
   //reduce the array
   var count = all.reduce(function(ret, el) {
-      ret[el.occ] = (ret[el.occ] || 0) + 1;
-      return ret;
+    ret[el.occ] = (ret[el.occ] || 0) + 1;
+    return ret;
   }, {});
 
-//find uniques and change boolean
-  all.forEach(function(el) { el.unique = count[el.occ] === 1; });
+  //find uniques and change boolean
+  all.forEach(function(el) {
+    el.unique = count[el.occ] === 1;
+  });
   //push into 3 new arrays
-  console.log(JSON.stringify(all))
+
   all.forEach(function(item) {
-     if (item.name === "trump") {
-    sortedBooleanedTrump.push(item)
-  }
-  else if (item.name === "hillary") {
-    sortedBooleanedHillary.push(item)
-  } else {
-    sortedBooleanedBernie.push(item)
+    if (item.name === "trump") {
+      sortedBooleanedTrump.push(item)
+    } else if (item.name === "hillary") {
+      sortedBooleanedHillary.push(item)
+    } else {
+      sortedBooleanedBernie.push(item)
     }
   })
   d3DataReady(sortedBooleanedTrump)
@@ -57,7 +58,7 @@ var findUniques = function() {
 
 
 var dataTrump = function() {
-  console.log('made it here')
+
   //load in csv, parse it for occuptions and count number of unique
   d3.csv("/trump_contributor_all.csv")
     .row(function(d) {
@@ -86,7 +87,6 @@ var dataTrump = function() {
       sortedTrump = _.sortBy(_occKeysTrump, function(o) {
         return o.count
       }).slice(Math.max(_occKeysTrump.length - 500, 1));
-      //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
 
     })
 }
@@ -150,10 +150,7 @@ var dataHillary = function() {
         return o.count
       }).slice(Math.max(_occKeysHillary.length - 500, 1));
     })
-  }
-
-
-
+}
 
 
 
@@ -176,31 +173,31 @@ var toggleColor = (function() {
 
 
 //Utility function
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-}
-
-var toggleColor = (function() {
-  var currentColor = "#2C2C2C";
-
-  return function() {
-    $('circle').css('stroke', '#2C2C2C')
-    currentColor = currentColor == "#2C2C2C" ? "red" : "#2C2C2C";
-    d3.select(this).style("stroke", currentColor);
-  }
-})();
+// function toTitleCase(str) {
+//   return str.replace(/\w\S*/g, function(txt) {
+//     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+//   });
+// }
+//
+// var toggleColor = (function() {
+//   var currentColor = "#2C2C2C";
+//
+//   return function() {
+//     $('circle').css('stroke', '#2C2C2C')
+//     currentColor = currentColor == "#2C2C2C" ? "red" : "#2C2C2C";
+//     d3.select(this).style("stroke", currentColor);
+//   }
+// })();
 
 //https://github.com/chriswhong/bubblecharge/blob/master/index.html, https://github.com/vlandham/bubble_cloud were of great help
 //inspiration: http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?_r=0
 
 //Prepare viz div
 var margin = {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0
+    top: 200,
+    right: 200,
+    bottom: 200,
+    left: 200
   },
   width = $('#viz').width() - margin.left - margin.right,
   height = $(window).height() - margin.top - margin.bottom,
@@ -214,6 +211,17 @@ var margin = {
     x: width / 2,
     y: height / 2
   },
+
+  unique_centers = {
+    true: {
+      x: width / 3,
+      y: height / 2
+    },
+    false: {
+      x: 2 * width / 3,
+      y: height / 2
+    }
+  },
   damper = .1;
 //Initialize Tooltip Caged d3 Tooltip
 tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
@@ -222,8 +230,6 @@ tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
 
 
 var d3DataReady = function(data) {
-
-
     var tip = d3.tip()
       .attr('class', 'd3-tip')
       .html(function(d) {
@@ -255,7 +261,6 @@ var d3DataReady = function(data) {
         cx: Math.random() * 10,
         cy: Math.random() * 10
       }
-      console.log(node)
       nodes.push(node);
     });
 
@@ -263,15 +268,88 @@ var d3DataReady = function(data) {
       return -Math.pow(d.charge, 2.0) / 8;
     };
 
+
     var force = d3.layout.force()
       .nodes(nodes)
-      .size([width, height])
-      .gravity(.1)
-      .charge(charge)
-      .on("tick", tick)
-      .start();
+      .size([width, height]);
+      display_unique();
 
 
+    function display_all() {
+      force.gravity(-.01)
+        .charge(charge)
+        .on("tick", function(e) {
+          circle.each(move_center(e.alpha))
+            .attr("cx", function(d) {
+
+              return d.x
+            })
+            .attr("cy", function(d) {
+              return d.y
+            });
+        })
+      force.start();
+    }
+
+    function display_unique() {
+      force.gravity(-.01)
+        .charge(charge)
+        .on("tick", function(e) {
+          circle.each(move_unique(e.alpha))
+          .attr("cx", function(d) {
+            debugger;
+            return d.x
+        })
+          .attr("cy", function(d) {
+            return d.y
+          })
+
+    })
+        force.start();
+  }
+
+    function move_center(e) {
+      return function(d) {
+        d.x = d.x + (center.x - d.x) * (damper + 0.02) * e;
+        d.y = d.y + (center.y - d.y) * (damper + 0.02) * e;
+      };
+    }
+
+    function move_unique(e) {
+      return function(d) {
+        var target = unique_centers[d.unique]
+        d.x = d.x + (target.x - d.x) * (damper + 0.02) * e * 1.1;
+        d.y = d.y + (target.y - d.y) * (damper + 0.02) * e * 1.1;
+      }
+    }
+    // function tick2(e) {
+    //   circle.attr("cx", function(d) {
+    //     var target = unique_centers[d.unique]
+    //     return d.x + (target.x - d.x) * (damper + 0.02) * e.alpha * 1.1;
+    //   }).attr("cy", function(d) {
+    //     var target = unique_centers[d.unique]
+    //     return d.y + (target.y - d.y) * (damper + 0.02) * e.alpha * 1.1;
+    //   });
+    // }
+
+    // console.log(charge)
+    // var force = d3.layout.force()
+    //   .nodes(nodes)
+    //   .size([width, height])
+    //   .gravity(.1)
+    //   .charge(charge)
+    //   .on("tick", tick)
+    //   .start();
+    //
+    // function tick(e) {
+    //   circle.attr("cx", function(d) {
+    //     return d.x + (center.x - d.x) * (damper + 0.02) *
+    //       e.alpha;
+    //   }).attr("cy", function(d) {
+    //     return d.y + (center.y - d.y) * (damper + 0.02) *
+    //       e.alpha;
+    //   });
+    // }
     var svg = d3.select("#viz")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -294,19 +372,13 @@ var d3DataReady = function(data) {
       .on('mouseout', tip.hide)
       .on('click', toggleColor)
 
-    //pull to center on tick
-    function tick(e) {
-      circle.attr("cx", function(d) {
-        return d.x + (center.x - d.x) * (damper + 0.02) *
-          e.alpha;
-      }).attr("cy", function(d) {
-        return d.y + (center.y - d.y) * (damper + 0.02) *
-          e.alpha;
-      });
+    circle.transition().duration(2000).attr("r", function(d) {
+      return d.radius;
+    })
 
 
 
-    }
+
     // Move nodes toward cluster focus.
 
     function gravity(alpha) {
