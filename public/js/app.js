@@ -3,6 +3,12 @@ $(document).ready(function() {
   dataHillary();
   dataBernie();
   chartMaker()
+  $('.unique').click(function() {
+      myChart.toggle_unique('unique')
+  })
+  $('.all').click(function() {
+      myChart.toggle_unique('all')
+  })
     //end on load
 });
 //global variables to store occupation object when CSV is parsed, the sortedArrays after they have been given new key values and sorted, and the final array with proper booleans for is Unique
@@ -73,7 +79,7 @@ var myChart = (function(d3) {
       left: 0
     },
     layout_gravity = -0.01,
-    force,
+    force = d3.layout.force(),
     circle,
     nodes = [];
     width = $('#viz').width() - margin.left - margin.right,
@@ -134,8 +140,8 @@ var myChart = (function(d3) {
         charge: radius_scale(d.count),
         name: d.name,
         contributors: d.count,
-        x: parseInt(Math.random() * 900),
-        y: parseInt(Math.random() * 800)
+        x: parseInt(Math.random() * 10),
+        y: parseInt(Math.random() * 10)
       }
       nodes.push(node);
     });
@@ -157,10 +163,9 @@ var myChart = (function(d3) {
         return "occupation " + d.occ;
       }).style("fill", function(d) {
         return d.color;
-      })
+      }).call(force.drag)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
-      .on('click', toggleColor)
 
     circle.transition().duration(2000).attr("r", function(d) {
       return d.radius;
@@ -386,12 +391,12 @@ function toTitleCase(str) {
   });
 }
 
-var toggleColor = (function() {
-  var currentColor = "#2C2C2C";
-
-  return function() {
-    $('circle').css('stroke', '#2C2C2C')
-    currentColor = currentColor == "#2C2C2C" ? "red" : "#2C2C2C";
-    d3.select(this).style("stroke", currentColor);
-  }
-})();
+// var toggleColor = (function() {
+//   var currentColor = "#2C2C2C";
+//
+//   return function() {
+//     $('circle').css('stroke', '#2C2C2C')
+//     currentColor = currentColor == "#2C2C2C" ? "red" : "#2C2C2C";
+//     d3.select(this).style("stroke", currentColor);
+//   }
+// })();
