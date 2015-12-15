@@ -14,4 +14,8 @@ app.get('/bernie', function(req, res) {
 app.get('/hillary', function(req, res){
   res.render('hillary.ejs')
 })
+
+app.get('/cruz', function (req, res) {
+  res.render('cruz.ejs')
+})
 };

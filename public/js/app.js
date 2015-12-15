@@ -2,6 +2,7 @@ $(document).ready(function() {
   dataTrump();
   dataHillary();
   dataBernie();
+  dataCruz();
   chartMaker()
   $('.unique').click(function() {
       myChart.toggle_unique('unique')
@@ -25,9 +26,13 @@ var occupationCountsBernie = {}
 var sortedBernie = [];
 var sortedBooleanedBernie = [];
 
+var occupationCountsCruz = {}
+var sortedCruz = [];
+var sortedBooleanCruz = [];
+
 
 function chartMaker() {
-  if (_.isEmpty(sortedTrump) || _.isEmpty(sortedHillary) || _.isEmpty(sortedBernie)) {
+  if (_.isEmpty(sortedTrump) || _.isEmpty(sortedHillary) || _.isEmpty(sortedBernie) || _.isEmpty(sortedCruz)) {
     setTimeout(chartMaker, 100)
   } else {
     findUniques();
@@ -37,7 +42,7 @@ function chartMaker() {
 
 var findUniques = function() {
   //Concatonate all three arrays
-  var all = sortedBernie.concat(sortedHillary).concat(sortedTrump);
+  var all = sortedBernie.concat(sortedHillary).concat(sortedTrump).concat(sortedCruz);
   //reduce the array
   var count = all.reduce(function(ret, el) {
     ret[el.occ] = (ret[el.occ] || 0) + 1;
@@ -55,7 +60,11 @@ var findUniques = function() {
       sortedBooleanedTrump.push(item)
     } else if (item.name === "hillary") {
       sortedBooleanedHillary.push(item)
-    } else {
+    }
+    else if (item.name === "cruz") {
+      sortedBooleanCruz.push(item)
+    }
+      else {
       sortedBooleanedBernie.push(item)
     }
   })
@@ -73,10 +82,10 @@ var myChart = (function(d3) {
 
   //Prepare viz div
   var margin = {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
+      top: 20,
+      right: 20,
+      bottom: 30,
+      left: 60
     },
     layout_gravity = -0.01,
     force = d3.layout.force(),
@@ -328,10 +337,13 @@ function dataBernie() {
     .row(function(d) {
       //extraction of occupation name
       //build the data counts
+
       var current = d.contbr_occupation
+      var money = d.contb_receipt_amt
       if (current) {
-        occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + 1 : 1
+        occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + 1  : 1
       }
+
     })
     .get(function(err, result) {
       // transform the data
@@ -345,6 +357,7 @@ function dataBernie() {
           name: "bernie"
         }
       })
+
 
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedBernie = _.sortBy(_occKeysBernie, function(o) {
@@ -381,6 +394,36 @@ function dataHillary() {
       sortedHillary = _.sortBy(_occKeysHillary, function(o) {
         return o.count
       }).slice(Math.max(_occKeysHillary.length - 500, 1));
+    })
+}
+
+function dataCruz() {
+  d3.csv("/cruz_contributors_all.csv")
+    .row(function(d) {
+      //extraction of occupation name
+      //build the data counts
+      var current = d.contbr_occupation
+      if (current) {
+        occupationCountsCruz[current] = (current in occupationCountsCruz) ? occupationCountsCruz[current] + 1 : 1
+      }
+    })
+    .get(function(err, result) {
+      // transform the data
+      if (err) throw err
+        //make into array of objects with key/value pairs in JSON format
+      var _occKeysCruz = Object.keys(occupationCountsCruz).map(key => {
+        return {
+          occ: key,
+          count: occupationCountsCruz[key],
+          unique: true,
+          name: "cruz"
+        }
+      })
+
+      //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
+      sortedCruz = _.sortBy(_occKeysCruz, function(o) {
+        return o.count
+      }).slice(Math.max(_occKeysCruz.length - 500, 1));
     })
 }
 
