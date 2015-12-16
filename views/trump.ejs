@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/bower_components/Materialize/dist/css/materialize.css">
+<body>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="/hillary">Hillary Clinton</a></li>
+        <li class="tab col s3"><a class = "active" href= "/trump">Donald Trump</a></li>
+        <li class="tab col s3"><a href="/bernie">Bernie Sanders</a></li>
+        <li class="tab col s3"><a href="/cruz">Ted Cruz</a></li>
+      </ul>
+    </div>
+  </div>
+  <h1>Donald<br> Trump's<br> Expenditures</h1>
+<div id = "viz"></div>
+<button class = "toggle-button all">All</button>
+<button class = "toggle-button unique">Unique</button>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.js"></script>
+  <script src="/bower_components/d3-tip/index.js"></script>
+  <script src="/bower_components/underscore/underscore.js"></script>
+  <script src="/js/on-load.js"></script>
+  <script src="/js/utility.js"></script>
+  <script src="/js/data-parse.js"></script>
+  <script src="/js/myChart.js"></script>
+  <script src="/js/init_trump.js"></script>
+</html>

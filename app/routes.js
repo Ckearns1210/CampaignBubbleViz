@@ -3,8 +3,8 @@ var request     = require('request');
 
 module.exports = function(app) {
 
-app.get('/', function(req, res) {
-  res.render('index.ejs');
+app.get('/trump', function(req, res) {
+  res.render('trump.ejs');
 });
 
 app.get('/bernie', function(req, res) {

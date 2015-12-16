@@ -1,3 +1,14 @@
+ul.tabs {
+  position: absolute;
+    z-index: 11;
+}
+
+h1 {
+font-size: 3rem !important;
+line-height: 110%;
+margin : 5.1rem 0px 1.68rem 23px !important;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -6,6 +17,7 @@
   color: #fff;
   border-radius: 2px;
   pointer-events: none;
+  z-index: 11;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -18,6 +30,7 @@
   color: rgba(0, 0, 0, 0.8);
   position: absolute;
   pointer-events: none;
+  z-index: 11;
 }
 
 /* Northward tooltips */
@@ -27,6 +40,7 @@
   top: 100%;
   left: 0;
   text-align: center;
+  z-index: 11;
 }
 
 /* Eastward tooltips */
@@ -87,11 +101,6 @@
   }
 }
 
-#viz {
-  height:100%;
-  margin: 0 auto;
-
-}
 
 circle {
   /*fill: #97A761;*/
@@ -108,6 +117,32 @@ body {
   background: #F4F3F2;
 }
 
+.all{
+  position: relative;
+  z-index: 11;
+  margin-left: 23px;
+
+}
+.unique {
+  position: relative;
+  z-index: 11;
+  margin-left: 23px;
+
+}
+
+#viz {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+svg {
+  height: 100%;
+}
 
 .occupation:hover {
   cursor:pointer;
