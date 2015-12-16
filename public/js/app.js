@@ -5,11 +5,11 @@ $(document).ready(function() {
   dataCruz();
   chartMaker()
   $('.unique').click(function() {
-      myChart.toggle_unique('unique')
+    myChart.toggle_unique('unique')
   })
   $('.all').click(function() {
       myChart.toggle_unique('all')
-  })
+    })
     //end on load
 });
 //global variables to store occupation object when CSV is parsed, the sortedArrays after they have been given new key values and sorted, and the final array with proper booleans for is Unique
@@ -34,6 +34,7 @@ var sortedBooleanCruz = [];
 function chartMaker() {
   if (_.isEmpty(sortedTrump) || _.isEmpty(sortedHillary) || _.isEmpty(sortedBernie) || _.isEmpty(sortedCruz)) {
     setTimeout(chartMaker, 100)
+    console.log("running recursion");
   } else {
     findUniques();
   }
@@ -60,11 +61,9 @@ var findUniques = function() {
       sortedBooleanedTrump.push(item)
     } else if (item.name === "hillary") {
       sortedBooleanedHillary.push(item)
-    }
-    else if (item.name === "cruz") {
+    } else if (item.name === "cruz") {
       sortedBooleanCruz.push(item)
-    }
-      else {
+    } else {
       sortedBooleanedBernie.push(item)
     }
   })
@@ -79,7 +78,6 @@ var findUniques = function() {
 
 var myChart = (function(d3) {
 
-
   //Prepare viz div
   var margin = {
       top: 20,
@@ -91,17 +89,17 @@ var myChart = (function(d3) {
     force = d3.layout.force(),
     circle,
     nodes = [];
-    width = $('#viz').width() - margin.left - margin.right,
+  width = $('#viz').width() - margin.left - margin.right,
     height = $(window).height() - margin.top - margin.bottom,
     n = 6,
     m = 1,
     padding = 6,
     radius = d3.scale.sqrt().range([0, 12]),
-    color = d3.scale.category10().domain(d3.range(m)),
+    // color = d3.scale.category10().domain(d3.range(m)),
     x = d3.scale.ordinal().domain(d3.range(m)).rangePoints([0, width], 1),
     center = {
       x: width / 2,
-      y: height / 2
+      y: height / 2.5
     },
 
     unique_centers = {
@@ -122,10 +120,10 @@ var myChart = (function(d3) {
 
 
   var d3DataReady = function(data) {
-      tip = d3.tip()
+    tip = d3.tip()
       .attr('class', 'd3-tip')
       .html(function(d) {
-        return "<span>" + toTitleCase(d.occ) + ", " + d.contributors + " contributors" + "</span>"
+        return "<span>" + toTitleCase(d.occ) + ", " + "$" + numberWithCommas(d.contributors) + "</span>"
       })
       .direction('nw')
       .offset([0, 3])
@@ -163,7 +161,7 @@ var myChart = (function(d3) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(tip)
 
-     circle = svg.selectAll("circle")
+    circle = svg.selectAll("circle")
       .data(nodes).enter().append("circle")
       .attr("r", function(d) {
         return d.radius;
@@ -171,7 +169,11 @@ var myChart = (function(d3) {
       .attr("class", function(d) {
         return "occupation " + d.occ;
       }).style("fill", function(d) {
-        return d.color;
+        if (d.unique == false) {
+          return '#FD7B46';
+        } else {
+          return '#036F91'
+        }
       }).call(force.drag)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
@@ -181,12 +183,12 @@ var myChart = (function(d3) {
     })
   };
 
-function charge (d) {
+  function charge(d) {
     return -Math.pow(d.charge, 2.0) / 8;
   };
 
   function start() {
-     force = d3.layout.force()
+    force = d3.layout.force()
       .nodes(nodes)
       .size([width, height]);
   }
@@ -301,19 +303,20 @@ function charge (d) {
 function dataTrump() {
 
   //load in csv, parse it for occuptions and count number of unique
-  d3.csv("/trump_contributor_all.csv")
+  d3.csv("/trump_expenditures_all.csv")
     .row(function(d) {
+
       //extraction of occupation name
       //build the data counts
-      var current = d.contbr_occupation
-
-      if (current) {
-        occupationCountsTrump[current] = (current in occupationCountsTrump) ? occupationCountsTrump[current] + 1 : 1;
+      var current = d.recipient_nm
+      var money = parseInt(d.disb_amt)
+      if (isNaN(money) || money <= 0)  return
+      if (current && money) {
+        occupationCountsTrump[current] = (current in occupationCountsTrump) ? occupationCountsTrump[current] + money : money
       }
-
     })
     .get(function(err, result) {
-      // transform the data
+        // transform the data
       if (err) throw err
         //make into array of objects with key/value pairs in JSON format
       var _occKeysTrump = Object.keys(occupationCountsTrump).map(key => {
@@ -327,23 +330,22 @@ function dataTrump() {
         //put in order and take top 500
       sortedTrump = _.sortBy(_occKeysTrump, function(o) {
         return o.count
-      }).slice(Math.max(_occKeysTrump.length - 500, 1));
-
+      });
     })
 }
 
 function dataBernie() {
-  d3.csv("/bernie_contributors_all.csv")
+  d3.csv("/bernie_expenditures_all.csv")
     .row(function(d) {
       //extraction of occupation name
       //build the data counts
 
-      var current = d.contbr_occupation
-      var money = d.contb_receipt_amt
+      var current = d.recipient_nm
+      var money = parseInt(d.disb_amt)
+        if (isNaN(money) || money <= 0)  return
       if (current) {
-        occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + 1  : 1
+        occupationCountsBernie[current] = (current in occupationCountsBernie) ? occupationCountsBernie[current] + money : money
       }
-
     })
     .get(function(err, result) {
       // transform the data
@@ -362,22 +364,28 @@ function dataBernie() {
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedBernie = _.sortBy(_occKeysBernie, function(o) {
         return o.count
-      }).slice(Math.max(_occKeysBernie.length - 500, 1));
+      });
 
     })
 }
 
 function dataHillary() {
-  d3.csv("/clinton_contributors_all.csv")
+  console.log('called hillary');
+  d3.csv("/clinton_expenditures_all.csv")
     .row(function(d) {
       //extraction of occupation name
       //build the data counts
-      var current = d.contbr_occupation
+      var current = d.recipient_nm
+      var money = parseInt(d.disb_amt)
+    if (isNaN(money) || money <= 0)  return
+      //Guard against 0 or negative numbers
+
       if (current) {
-        occupationCountsHillary[current] = (current in occupationCountsHillary) ? occupationCountsHillary[current] + 1 : 1
+        occupationCountsHillary[current] = (current in occupationCountsHillary) ? occupationCountsHillary[current] + money : money
       }
     })
     .get(function(err, result) {
+      console.log("got to get");
       // transform the data
       if (err) throw err
         //make into array of objects with key/value pairs in JSON format
@@ -389,22 +397,24 @@ function dataHillary() {
           name: "hillary"
         }
       })
-
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedHillary = _.sortBy(_occKeysHillary, function(o) {
         return o.count
-      }).slice(Math.max(_occKeysHillary.length - 500, 1));
+      });
+
     })
 }
 
 function dataCruz() {
-  d3.csv("/cruz_contributors_all.csv")
+  d3.csv("/cruz_expenditures_all.csv")
     .row(function(d) {
       //extraction of occupation name
       //build the data counts
-      var current = d.contbr_occupation
+      var current = d.recipient_nm
+      var money = parseInt(d.disb_amt)
+    if (isNaN(money) || money <= 0)  return
       if (current) {
-        occupationCountsCruz[current] = (current in occupationCountsCruz) ? occupationCountsCruz[current] + 1 : 1
+        occupationCountsCruz[current] = (current in occupationCountsCruz) ? occupationCountsCruz[current] + money : money
       }
     })
     .get(function(err, result) {
@@ -423,7 +433,7 @@ function dataCruz() {
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedCruz = _.sortBy(_occKeysCruz, function(o) {
         return o.count
-      }).slice(Math.max(_occKeysCruz.length - 500, 1));
+      });
     })
 }
 
@@ -432,6 +442,10 @@ function toTitleCase(str) {
   return str.replace(/\w\S*/g, function(txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // var toggleColor = (function() {

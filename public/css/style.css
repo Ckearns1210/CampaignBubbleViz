@@ -89,14 +89,15 @@
 
 #viz {
   height:100%;
+  margin: 0 auto;
 
 }
 
 circle {
-  fill: #009587;
-  stroke: #2C2C2C;
-  stroke-width: 2px;
-  opacity: .7;
+  /*fill: #97A761;*/
+  /*stroke: black;*/
+  stroke-width: 1px;
+  opacity: .8;
 }
 
 circle.highlight{
@@ -104,7 +105,7 @@ circle.highlight{
 }
 
 body {
-  background: #FAFAFA;
+  background: #F4F3F2;
 }
 
 
