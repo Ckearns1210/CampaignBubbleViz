@@ -11,7 +11,7 @@ app.get('/bernie', function(req, res) {
   res.render('bernie.ejs');
 })
 
-app.get('/hillary', function(req, res){
+app.get('/', function(req, res){
   res.render('hillary.ejs')
 })
 

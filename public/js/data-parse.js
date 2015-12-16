@@ -98,7 +98,7 @@ function dataHillary() {
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedHillary = _.sortBy(_occKeysHillary, function(o) {
         return o.count
-      }).slice(Math.max(_occKeysHillary.length - 500, 1));
+      }).slice(Math.max(_occKeysHillary.length - 400, 1));
 
     })
 }
@@ -131,6 +131,6 @@ function dataCruz() {
       //when DATA is ready, THEN call function to create chart(d3.csv is asynch so this is a must)
       sortedCruz = _.sortBy(_occKeysCruz, function(o) {
         return o.count
-      });
+      }).slice(Math.max(_occKeysCruz.length - 500, 1));
     })
 }
