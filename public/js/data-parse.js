@@ -1,4 +1,4 @@
-//Could be dried up very easily.  
+//Could be dried up very easily.
 
 function dataTrump() {
   //Variable names need to be changed, still represent original DATA of occupations
@@ -16,7 +16,7 @@ function dataTrump() {
       // transform the data
       if (err) throw err
         //make into array of objects with key/value pairs in JSON format, add unqiue boolean and candidate name
-      var _occKeysTrump = Object.keys(occupationCountsTrump).map(key => {
+      var _occKeysTrump = Object.keys(occupationCountsTrump).map(function(key) {
           return {
             occ: key,
             count: occupationCountsTrump[key],
@@ -45,7 +45,7 @@ function dataBernie() {
       // transform the data
       if (err) throw err
         //make into array of objects with key/value pairs in JSON format
-      var _occKeysBernie = Object.keys(occupationCountsBernie).map(key => {
+      var _occKeysBernie = Object.keys(occupationCountsBernie).map(function(key) {
         return {
           occ: key,
           count: occupationCountsBernie[key],
@@ -75,7 +75,7 @@ function dataHillary() {
       // transform the data
       if (err) throw err
         //make into array of objects with key/value pairs in JSON format
-      var _occKeysHillary = Object.keys(occupationCountsHillary).map(key => {
+      var _occKeysHillary = Object.keys(occupationCountsHillary).map(function(key) {
           return {
             occ: key,
             count: occupationCountsHillary[key],
@@ -104,7 +104,7 @@ function dataCruz() {
     })
     .get(function(err, result) {
       if (err) throw err
-      var _occKeysCruz = Object.keys(occupationCountsCruz).map(key => {
+      var _occKeysCruz = Object.keys(occupationCountsCruz).map(function(key) {
           return {
             occ: key,
             count: occupationCountsCruz[key],
