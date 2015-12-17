@@ -6,10 +6,8 @@ var express     = require('express'),
     mongoose    = require('mongoose'),
     bodyParser  = require('body-parser'),
     port        = process.env.PORT || 3000;
-    configDB    = require('./config/database.js');
 
-//mongoose DB
-mongoose.connect(configDB.url);
+
 
 
 //EXPRESS SETUP
