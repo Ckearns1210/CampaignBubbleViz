@@ -8,6 +8,9 @@
 
   $.fn.extend({
     openModal: function(options) {
+      debugger;
+    createBarChart();
+
 
       $('body').css('overflow', 'hidden');
 

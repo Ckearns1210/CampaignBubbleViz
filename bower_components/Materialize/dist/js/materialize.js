@@ -671,7 +671,7 @@ else {
 
   $.fn.extend({
     openModal: function(options) {
-
+			  createBarChart();
       $('body').css('overflow', 'hidden');
 
       var defaults = {
@@ -1294,7 +1294,7 @@ $(document).ready(function(){
 
     },
     select_tab : function( id ) {
-    
+      this.find('a[href="#' + id + '"]').trigger('click');
     }
   };
 

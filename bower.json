@@ -1,6 +1,6 @@
 {
-  "name": "bubblecharge-master",
-  "description": "",
+  "name": "Campaign_Bubble_Viz",
+  "description": "GA Final Project",
   "main": "server.js",
   "authors": [
     "Colin Kearns <ckearns1210@gmail.com>"
@@ -16,7 +16,9 @@
     "tests"
   ],
   "dependencies": {
+    "Materialize": "materialize#~0.97.3",
     "d3-tip": "~0.6.7",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "chartist": "~0.9.5"
   }
 }

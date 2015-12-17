@@ -1,8 +1,61 @@
 @import url(https://fonts.googleapis.com/css?family=Merriweather);
+.modal-trigger {
+  z-index: 11;
+  position: relative;
+}
+
+.explanation {
+  clear: both;
+  margin-top: 6rem;
+  margin-left: 23px;
+}
+.explanation-text {
+  max-width: 300px;
+}
+
 body {
   background: #F4F3F2;
-  font-family: "Merriweather", serif;
+  font-family: "Merriweather", serif !important;
   font-size: 14px;
+}
+
+.toggle-button {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 2px;
+  cursor: pointer;
+
+  transition: border-bottom 200ms;
+}
+
+.unique.active {
+  border-bottom: 2px solid #3388A4;
+  transition: border-bottom 200ms;
+}
+
+.all.active {
+  border-bottom: 2px solid #FB9268;
+  transition: border-bottom 200ms;
+}
+
+.all, .unique {
+  float: left;
+}
+.svg-container {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+}
+
+.bar-chart text {
+  font: 10px;
+  fill: white;
+  text-anchor: end;
+}
+
+.bar-chart {
+  fill: steelblue;
+  margin-left: 23px;
+  float: left;
 }
 svg {
   height: 100%;
@@ -170,7 +223,7 @@ circle.highlight {
   overflow: hidden;
 }
 .occupation:hover {
-  cursor: pointer;
+  cursor: crosshair;
 }
 .d3-tip.animate {
   animation: bounceIn 5s ease-out;

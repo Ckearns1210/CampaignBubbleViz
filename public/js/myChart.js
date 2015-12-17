@@ -38,13 +38,12 @@ var myChart = (function(d3) {
       }
     },
     damper = .1;
-  //Initialize Tooltip Caged d3 Tooltip
-  tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
-    return d;
-  });
+
+
 
 
   var d3DataReady = function(data) {
+      //Initialize Tooltip Caged d3 Tooltip
     tip = d3.tip()
       .attr('class', 'd3-tip')
       .html(function(d) {
