@@ -23,18 +23,18 @@ var myChart = (function(d3) {
     // color = d3.scale.category10().domain(d3.range(m)),
     x = d3.scale.ordinal().domain(d3.range(m)).rangePoints([0, width], 1),
     center = {
-      x: width / 1.8,
-      y: height / 2.0
+      x: width / 1.7,
+      y: height / 1.8
     },
 
     unique_centers = {
       true: {
-        x: width / 2.2,
-        y: height / 2.0
+        x: width / 2.1,
+        y: height / 1.8
       },
       false: {
-        x: 1.5 * width / 2.2,
-        y: height / 2.0
+        x: 1.5 * width / 2.1,
+        y: height / 1.8
       }
     },
     damper = .1;
@@ -81,6 +81,7 @@ var myChart = (function(d3) {
       .append("svg")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr("viewBox", "0 0 " + width + " " + height)
+      .attr("preserveAspectRatio", "xMinYMin meet")
       .call(tip)
 
     circle = svg.selectAll("circle")

@@ -22,7 +22,32 @@ function createBarChart() {
     }]
   ];
 
-  new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
+  var plugins = [
+ Chartist.plugins.ctAxisTitle({
+    axisX: {
+       axisTitle: 'X title',
+       axisClass: 'ct-axis-title',
+       offset: {
+          x: 0,
+          y: 50
+       },
+       textAnchor: 'middle'
+    },
+    axisY: {
+       axisTitle: 'Y title',
+       axisClass: 'ct-axis-title',
+       offset: {
+          x: 0,
+          y: 0
+       },
+       textAnchor: 'middle',
+       flipTitle: false
+     }
+   })
+ ]
+
+
+  new Chartist.Bar('.ct-chart', data, options, responsiveOptions, plugins);
 }
   //trump 5654623.14
   //bernie 14088108.78

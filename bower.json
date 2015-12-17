@@ -19,6 +19,7 @@
     "Materialize": "materialize#~0.97.3",
     "d3-tip": "~0.6.7",
     "underscore": "~1.8.3",
-    "chartist": "~0.9.5"
+    "chartist": "~0.9.5",
+    "chartist-plugin-axistitle": "~0.1.0"
   }
 }
