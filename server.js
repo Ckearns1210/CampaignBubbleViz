@@ -25,7 +25,6 @@ require('./app/routes.js')(app)
 
 //Port and Start
 app.listen(port);
-console.log('⛷ ⛷ ⛷ ⛷ ⛷ Cool runnings down through port 3000 🏂 🏂 🏂 🏂 🏂');
 
 app.get('/', function (req, res) {
     res.render("I Work");
