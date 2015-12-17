@@ -5,7 +5,7 @@ var express     = require('express'),
     request     = require('request'),
     mongoose    = require('mongoose'),
     bodyParser  = require('body-parser'),
-    port        = process.env.PORT || 80;
+    port        = process.env.PORT || 3000;
 
 
 
