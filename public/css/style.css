@@ -168,6 +168,7 @@ circle.highlight {
 /*BOTTOM COLOR BAR EXPLANATION*/
 
 .color-explain-text {
+  display: none;
   max-width: 300px;
   opacity: 0;
   box-sizing: border-box;
@@ -176,12 +177,23 @@ circle.highlight {
   margin-bottom: 5px;
   max-height: 60px;
   overflow: hidden;
-  transition: max-height 1s;
-  -webkit-transition: max-height 1s;
+  -webkit-animation: display-none-transition 6s;
+   animation: display-none-transition 6s;
 }
 .color-explain:hover .color-explain-text{
   opacity: 1;
+  display:block;
 }
+
+@-webkit-keyframes display-none-transition {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .color-explain {
   height: 20px;
   margin-left: 23px;
