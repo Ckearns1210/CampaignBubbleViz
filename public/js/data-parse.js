@@ -7,7 +7,9 @@ function dataTrump() {
       //Make one giant object with the keys as the recipient name and the values the amount (add amount each time)
       var current = d.recipient_nm
       var money = parseInt(d.disb_amt)
+      //Guard against NaN and zeros and negatives
       if (isNaN(money) || money <= 0) return
+      //Make singular objects with key values and add money
       if (current && money) {
         occupationCountsTrump[current] = (current in occupationCountsTrump) ? occupationCountsTrump[current] + money : money
       }

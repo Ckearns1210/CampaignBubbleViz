@@ -39,9 +39,6 @@ var myChart = (function(d3) {
     },
     damper = .1;
 
-
-
-
   var d3DataReady = function(data) {
       //Initialize Tooltip Caged d3 Tooltip
     tip = d3.tip()
@@ -60,7 +57,7 @@ var myChart = (function(d3) {
       .domain([0, max_amount])
       .range([3, 100])
 
-
+//create nodes
     data.forEach(function(d, i) {
       var node;
       node = {
@@ -76,7 +73,7 @@ var myChart = (function(d3) {
       }
       nodes.push(node);
     });
-
+//create svg
     var svg = d3.select("#viz")
       .append("svg")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
