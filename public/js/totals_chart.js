@@ -1,7 +1,7 @@
 function createBarChart() {
 
   var data = {
-    labels: ["Trump", "Sanders", "Cruz", "Hillary"],
+    labels: ["Trump", "Sanders", "Cruz", "Clinton"],
 
     series: [
       [5.6, 14, 12.6, 43.5]
