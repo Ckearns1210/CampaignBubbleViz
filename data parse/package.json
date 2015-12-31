@@ -1,0 +1,19 @@
+{
+  "name": "dataparse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "d3": "^3.5.12",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "underscore": "^1.8.3"
+  }
+}

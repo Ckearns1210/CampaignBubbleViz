@@ -1,0 +1,39 @@
+<div id="viz"></div>
+<span class="toggle-button all">All</span>
+<span class="toggle-button unique">Unique</span>
+<div class="svg-container">
+</div>
+<div class="explanation">
+  <p class="explanation-text">
+    How four of the top candidates are spending money in the 2016 Presidential Primaries, and which expenditures are unique to the individual campaigns.</p>
+</div>
+<a class="modal-trigger" href="#modal1">
+  <span class="toggle-button compare-totals">Total Expenditures</span>
+</a>
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <div id="chartist" class="ct-chart" data-x-axis="Candidates" data-y-axis="Expenditures (Millions)"></div>
+  </div>
+</div>
+
+<div class="color-explain">
+  <div class="color-explain-text">
+    <p>These bubbles represent this candidate's total spending. Blue represents spending that is unique to this candidate, while orange bubbles are expenditures that have been shared between two or more candidates represented.</p>
+  </div>
+  <div class="orange"></div>
+  <div class="blue"></div>
+</div>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.js"></script>
+<script src="/bower_components/Materialize/dist/js/materialize.js"></script>
+<script src="bower_components/chartist/dist/chartist.js"></script>
+<script src="/bower_components/chartist-plugin-axistitle/dist/chartist-plugin-axistitle.js"></script>
+<script src="/bower_components/d3-tip/index.js"></script>
+<script src="/bower_components/underscore/underscore.js"></script>
+<script src="/js/on-load.js"></script>
+<script src="/js/utility.js"></script>
+<script src="/js/myChart.js"></script>
+<script src="/js/totals_chart.js"></script>
