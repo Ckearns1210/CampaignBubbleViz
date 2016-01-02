@@ -42,7 +42,7 @@ To Use:
 
 ## Known Issues
 
-The data, which only needs to be parsed once, is parsed in a seperate Node application using Javascript and D3, and manually saved to files.  If I was to build a similar application, with a static data source that may need to be updated or have candidates added to it, I would approach the data parsing in a different way.  As it stands, the d3 parse and get methods employed to parse the CSV use XMLHttpRequest, tying them to the DOM.  If these methods were replaced with a Node CSV parse module, a simple command line program could be implemented to parse the data, making it more modular, and easier to convert to a server side implementation if a live data source became available. 
+The data, which only needs to be parsed once, is parsed in a seperate Node application using Javascript and D3, and manually saved to files.  If I was to build a similar application, with a static data source that may need to be updated or have candidates added to it, I would approach the data parsing in a different way.  As it stands, the d3 parse and get methods employed to parse the CSV use XMLHttpRequest, tying them to the DOM.  If these methods were replaced with a Node CSV parse module, a simple command line program could be implemented to parse the data and save it using Node's FS, making it more modular, and easier to convert to a server side implementation if a live data source became available. 
 
 ## Contributing
 
