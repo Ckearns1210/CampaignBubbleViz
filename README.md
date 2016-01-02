@@ -1,6 +1,6 @@
 # 2016 Presidential Primary Campaign Finance Expenditure Visualization
 
-## Experiment with visualizaing a static data source in a visually interesting way using the D3 Library.  Data was sourced from the Federal Elections Commission and is freely available.
+## Data was sourced from the Federal Elections Commission and is freely available.
 
 # Authors:
 [ckearns1210](https://github.com/ckearns1210)
