@@ -68,3 +68,5 @@ Please contact authors for additional usage.
 
 ![alt tag](https://github.com/Ckearns1210/CampaignBubbleViz/blob/master/screenshots/Screen%20Shot%202016-01-02%20at%203.36.58%20PM.png?raw=true)
 ![alt tag](https://github.com/Ckearns1210/CampaignBubbleViz/blob/master/screenshots/Screen%20Shot%202016-01-02%20at%203.37.06%20PM.png?raw=true)
+![alt tag](https://github.com/Ckearns1210/CampaignBubbleViz/blob/master/screenshots/Screen%20Shot%202016-01-04%20at%2011.38.10%20AM.png?raw=true)
+
