@@ -4,7 +4,7 @@ var express        = require('express'),
     router         = express.Router(),
     request        = require('request'),
     bodyParser     = require('body-parser'),
-    port           = process.env.PORT || 3000,
+    port           = process.env.PORT || 80,
     fs             = require('fs');
 
 
