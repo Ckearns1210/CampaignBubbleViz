@@ -49,13 +49,16 @@ var myChart = (function(d3) {
       .direction('nw')
       .offset([0, 3])
 
+//used to scale by window height
     var max_amount = d3.max(data, function(d) {
         return parseInt(d.count, 10);
       }),
+      domain_scale = (max_amount / 700) * height;
       radius_scale = d3.scale.pow()
       .exponent(0.55)
-      .domain([0, max_amount])
-      .range([3, 100])
+      .domain([0, domain_scale + (max_amount-domain_scale)] )
+      //used to scale by window width
+      .range([3, width/12.8])
 
 //create nodes
     data.forEach(function(d, i) {
@@ -78,7 +81,7 @@ var myChart = (function(d3) {
       .append("svg")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr("viewBox", "0 0 " + width + " " + height)
-      .attr("preserveAspectRatio", "xMinYMin meet")
+
       .call(tip)
 
     circle = svg.selectAll("circle")
