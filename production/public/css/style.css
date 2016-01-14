@@ -1,4 +1,4 @@
-/*FONTS*/
+  /*FONTS*/
 
 @import url(https://fonts.googleapis.com/css?family=Merriweather);
 @font-face {
@@ -7,7 +7,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 
 /*BASE STYLES*/
 
@@ -165,7 +164,6 @@ circle.highlight {
   text-decoration: none;
 }
 
-
 /*Tooltip for Color Explanation*/
 
 .question-mark {
@@ -178,9 +176,6 @@ circle.highlight {
   left: 23px;
   color: grey;
 }
-
-
-
 .tooltip {
   opacity: 0;
   position: absolute;
@@ -195,7 +190,6 @@ circle.highlight {
   z-index: 100;
   font-family: "Merriweather", serif !important;
   font-size: 12px;
-
 }
 .question-mark:hover .tooltip {
   opacity: 1 !important;
@@ -215,6 +209,7 @@ circle.highlight {
 }
 
 /* Creates a small triangle extender for the tooltip */
+
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -228,6 +223,7 @@ circle.highlight {
 }
 
 /* Northward tooltips */
+
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
@@ -238,6 +234,7 @@ circle.highlight {
 }
 
 /* Eastward tooltips */
+
 .d3-tip.e:after {
   content: "\25C0";
   margin: -4px 0 0 0;
@@ -246,6 +243,7 @@ circle.highlight {
 }
 
 /* Southward tooltips */
+
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
@@ -255,6 +253,7 @@ circle.highlight {
 }
 
 /* Westward tooltips */
+
 .d3-tip.w:after {
   content: "\25B6";
   margin: -4px 0 0 -1px;
@@ -311,7 +310,58 @@ circle.highlight {
   right: 23px;
   z-index: 11;
 }
-
-.twitter {
-  z-index: 11;
+.mobile {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #F4F3F2;
+  z-index: 1000;
 }
+.mobile-text  {
+  text-align: center;
+  font-size: 36px;
+  margin: 20% 20px;
+}
+#email-wrapper {
+  text-align: center;
+}
+
+.email {
+  font-size: 20px;
+  margin: 20% 20px;
+  color: #202020;
+  border-bottom: 2px solid #ccc;
+}
+
+
+@media screen and (min-width: 320px) {
+  .mobile {
+    display: none;
+  }
+}
+@media screen and (max-width: 680px) {
+  .mobile {
+    display: block;
+    position: fixed;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 100%;
+  }
+}
+@media screen and (max-height: 500px) {
+  .mobile {
+    display: none;
+  }
+  @media screen and (min-height: 200px) {
+    .mobile {
+      display: block;
+      position: fixed;
+      overflow-y: hidden;
+      overflow-x: hidden;
+      width: 100%;
+    }
+  }

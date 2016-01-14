@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-    <meta name="title" content="Campaign Expenditures">
-   	<meta name="description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
-   	<meta property="og:title" content="Campaign Expenditures">
-   	<meta property="og:description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
-   	<meta property="og:image" content="assests/campaign_og.png" name="thumb">
-   	<meta property="og:site_name" content="Campaign Expenditures">
-   	<meta property="og:type" content="website">
-   	<meta property="og:url" content="http://campaignexpenditures.com">
-   	<meta itemprop="name" content="Colin Kearns">
-   	<meta itemprop="description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
-   	<meta itemprop="image" content="assests/campaign_og.png">
-   	<meta name="apple-mobile-web-app-capable" content="yes">
-   	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-   	<link rel="canonical" href="http://campaignexpenditures">
-   	<link rel="image_src" type="image/jpeg" href= "assets/campaign_og.png">
-    <title>Campaign Expenditures - Colin Kearns</title>
+<meta name="title" content="Campaign Expenditures">
+<meta name="description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
+<meta property="og:title" content="Campaign Expenditures">
+<meta property="og:description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
+<meta property="og:image" content="assests/campaign_og.png" name="thumb">
+<meta property="og:site_name" content="Campaign Expenditures">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://campaignexpenditures.com">
+<meta itemprop="name" content="Colin Kearns">
+<meta itemprop="description" content="An Exploration of Presidential Primary Expenditures by Colin Kearns">
+<meta itemprop="image" content="assests/campaign_og.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="canonical" href="http://campaignexpenditures">
+<link rel="image_src" type="image/jpeg" href="assets/campaign_og.png">
+<title>Campaign Expenditures - Colin Kearns</title>
 <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-touch-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-touch-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-touch-icon-72x72.png">
@@ -35,11 +35,17 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 <meta name="theme-color" content="#ffffff">
-
 <link rel="stylesheet" href="/bower_components/Materialize/dist/css/materialize.css">
 <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
 <link rel="stylesheet" href="/css/style.css">
+
 <body>
+  <div class="mobile">
+    <p class="mobile-text">Please view on desktop for the intended experience.</p>
+    <div id="email-wrapper">
+      <a class="email" href="mailto:?subject=Campaign Expenditure Visualization">Email reminder to view later</a>
+    </div>
+  </div>
   <ul class="nav">
     <li><a href="/">Hillary Clinton</a></li>
     <li><a href="/trump">Donald Trump</a></li>
